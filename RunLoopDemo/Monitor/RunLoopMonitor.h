@@ -9,6 +9,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+#define SHAREDMONITOR [RunLoopMonitor sharedInstance]
+
 @interface RunLoopMonitor : NSObject
 
 + (instancetype)sharedInstance;

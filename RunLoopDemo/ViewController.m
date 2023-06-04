@@ -20,16 +20,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor blueColor];
     
     [[RunLoopMonitor sharedInstance] startMonitoring];
     
+    [self buildUI];
+    
+}
+
+- (void)buildUI{
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     [self.view addSubview:tableView];
     [tableView setDelegate:self];
     [tableView setDataSource:self];
     [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:NSStringFromClass([UITableViewCell class])];
-    
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
