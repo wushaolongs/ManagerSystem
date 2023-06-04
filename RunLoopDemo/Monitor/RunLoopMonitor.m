@@ -33,7 +33,8 @@ static inline dispatch_queue_t monitor_queue(void){
 
 // RunLoop观察者的回调函数，用于记录RunLoop的活动状态
 void runLoopObserverCallback(CFRunLoopObserverRef observer, CFRunLoopActivity activity, void *info){
-    RunLoopMonitor *object = (__bridge  RunLoopMonitor *)info;
+//    RunLoopMonitor *object = (__bridge  RunLoopMonitor *)info;
+    SHAREDMONITOR.currentActivity = activity;
     dispatch_semaphore_signal(SHAREDMONITOR.semphore);
 #if LOG_RUNLOOP_ACTIVITY
     switch (activity) {
@@ -71,7 +72,7 @@ void runLoopObserverCallback(CFRunLoopObserverRef observer, CFRunLoopActivity ac
             break;
     }
 #endif
-    object.currentActivity = activity;
+//    object.currentActivity = activity;
 }
 
 
@@ -152,7 +153,7 @@ static RunLoopMonitor *_instance = nil;
                     [self stopMonitoring];
                     continue;
                 }
-                if (self.currentActivity == kCFRunLoopBeforeWaiting || self.currentActivity == kCFRunLoopAfterWaiting){
+                if (self.currentActivity == kCFRunLoopBeforeSources || self.currentActivity == kCFRunLoopAfterWaiting){
                     if (++_timeOut < 3){
                         continue;
                     }
